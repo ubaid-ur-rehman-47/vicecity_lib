@@ -127,6 +127,37 @@ function ViceCity.ResolveProviders()
         }
     end
     ViceCity.InventoryAdapter = ViceCity.ResolveProvider('inventory', inventoryCandidates)
+    local appearanceResources = {
+        ['17mov'] = '17mov_CharacterSystem',
+        codem = 'codem-clothing',
+        codemAppearance = 'codem-appearance',
+        illenium = 'illenium-appearance',
+        qb = 'qb-clothing',
+        esx = 'esx_skin',
+        skinchanger = 'skinchanger',
+        fivem = 'fivem-appearance',
+        qs = 'qs-appearance',
+        ['4bit'] = '4bit_appearance',
+        qf = 'qf_skinmenu',
+        crm = 'crm-appearance',
+        tgiann = 'tgiann-clothing',
+        rcore = 'rcore_clothing',
+        ['0r'] = '0r-clothing',
+        native = nil,
+    }
+    local appearanceCandidates = {}
+    local appearanceConfig = ViceCityConfig.appearance or {}
+    for _, name in ipairs(appearanceConfig.priority or {}) do
+        appearanceCandidates[#appearanceCandidates + 1] = {
+            name = name,
+            resource = appearanceResources[name],
+        }
+    end
+    local configuredAppearance = appearanceConfig.provider
+    if configuredAppearance and configuredAppearance ~= 'auto' then
+        appearanceCandidates = {{ name = configuredAppearance, resource = appearanceResources[configuredAppearance] }}
+    end
+    ViceCity.AppearanceAdapter = ViceCity.ResolveProvider('appearance', appearanceCandidates)
     ViceCity.ResolveProvider('database', {
         { name = 'none' },
     })

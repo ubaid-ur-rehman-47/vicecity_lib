@@ -12,5 +12,13 @@ ViceCityConfig = {
         'ox', 'qb', 'qs', 'codem', 'codemv2', 'core', 'tgiann',
         'origen', 'ak47', 'ak47qb', 'jaksam', 'jpr', 'ps', 'lj', 'esx', 's', 'native',
     },
+    appearance = {
+        provider = 'auto',
+        priority = {
+            '17mov', 'codem', 'codemAppearance', 'illenium', 'qb', 'esx', 'skinchanger',
+            'fivem', 'qs', '4bit', 'qf', 'crm', 'tgiann', 'rcore', '0r', 'native',
+        },
+        applyMode = 'hybrid',
+    },
     disabled = {},
 }
