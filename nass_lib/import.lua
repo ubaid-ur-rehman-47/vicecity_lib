@@ -1,0 +1,1 @@
+nass = exports.nass_lib:getObject()

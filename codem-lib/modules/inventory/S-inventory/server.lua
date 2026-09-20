@@ -1,0 +1,117 @@
+-- codem-lib inventory provider: S-inventory (server)
+-- Registered at load; the exports pick the active provider per call.
+if LibConfig.Debug then
+    print('[codem-lib] Inventory provider loaded: S-inventory')
+end
+
+local Inventory = {}
+LibInventoryProviders['S-inventory'] = Inventory
+
+--Whether an item can carry per-item metadata (info) through this bridge.
+--Scripts that key an item to a thing (a room key, a vehicle key) ask this
+--before trusting the item.
+Inventory.supportsMetadata = false
+
+-- ESX is resolved lazily: this file loads on every server, but the shared
+-- object only exists when es_extended is actually running.
+local ESX
+local function getESX()
+    if not ESX then ESX = exports['es_extended']:getSharedObject() end
+    return ESX
+end
+
+--@param playerId: number [existing player id]
+--@return items: table [{name: string, amount: number, metadata: table, slot: number}]
+Inventory.getPlayerItems = function(playerId)
+    local xPlayer = getESX().GetPlayerFromId(playerId)
+    return xPlayer.getInventory()
+end
+
+--@param prefix: string [prefix for the drop]
+--@param items: table [name: string, count: number, metadata: table]
+--@param coords: vector3 [drop coordinates]
+Inventory.CustomDrop = function(prefix, items, coords)
+    -- S-inventory does not support custom drops
+end
+
+--@param playerId: number [existing player id]
+--@param itemName: string [item name]
+--@param itemCount: number [amount of items to add]
+--@param itemMetadata: table [item metadata, optional]
+--@param itemSlot: number [item slot, optional]
+Inventory.addItem = function(playerId, itemName, itemCount, itemMetadata, itemSlot)
+    local xPlayer = getESX().GetPlayerFromId(playerId)
+    xPlayer.addInventoryItem(itemName, itemCount)
+end
+
+--@param playerId: number [existing player id]
+--@param itemName: string [item name]
+--@param itemCount: number [amount of items to add]
+--@param itemMetadata: table [item metadata, optional]
+--@param itemSlot: number [item slot, optional]
+Inventory.removeItem = function(playerId, itemName, itemCount, itemMetadata, itemSlot)
+    local xPlayer = getESX().GetPlayerFromId(playerId)
+    xPlayer.removeInventoryItem(itemName, itemCount, itemMetadata)
+end
+
+--@param playerId: number [existing player id]
+--@param itemName: string [item name]
+--@param itemMetadata: table [item metadata, optional]
+--@return count: number [amount of items in inventory]
+Inventory.getItemCount = function(playerId, itemName, itemMetadata)
+    local xPlayer = getESX().GetPlayerFromId(playerId)
+    return xPlayer.getInventoryItem(itemName)?.count or 0
+end
+
+Inventory.getItemSlot = function(playerId, slot)
+    local xPlayer = getESX().GetPlayerFromId(playerId)
+    local items = xPlayer.getInventory()
+    return items[slot]
+end
+
+Inventory.createShop = function(shopName, data)
+    -- S-inventory does not support shops
+end
+
+Inventory.itemsData = {}
+GlobalState['codem-lib:itemsData'] = Inventory.itemsData
+
+Citizen.CreateThread(function()
+    -- Item metadata cache is only useful when S-inventory itself is running
+    -- (its `items` table is ESX-specific); skip everywhere else.
+    if GetResourceState('S-inventory') ~= 'started' then return end
+    while not MySQL?.ready do
+        Citizen.Wait(100)
+    end
+
+    local result = MySQL.query.await('SELECT * FROM items')
+    for k, v in pairs(result) do
+        Inventory.itemsData[v.name] = {
+            label = v.label,
+            description = v.description or v.label,
+        }
+    end
+    GlobalState['codem-lib:itemsData'] = Inventory.itemsData
+end)
+--@return catalog: table<string, { label: string, weight: number, image: string|nil }>
+--Item metadata comes from the framework's shared table; only the picture
+--folder is this inventory's own.
+Inventory.itemCatalog = function()
+    return LibFrameworkCatalog('nui://S-inventory/html/images/')
+end
+
+--@param playerId: number
+--@return capacity: { slots: number|nil, maxWeight: number|nil } [kg] or nil
+Inventory.capacity = function(playerId)
+    return LibPlayerCapacity(playerId)
+end
+
+--S-inventory: stashes through its own stash exports.
+Inventory.moveStash = function(fromId, toId)
+    local si = exports['S-inventory']
+    return LibMoveStashWith(fromId, toId, {
+        items = function(id) return si:GetStashItems(id) end,
+        add = function(id, name, count, meta) return si:AddItemToStash(id, name, count, meta) ~= false end,
+        remove = function(id, name, count, _, slot) si:RemoveItemFromStash(id, name, count, slot) end,
+    })
+end
