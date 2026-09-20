@@ -20,5 +20,15 @@ ViceCityConfig = {
         },
         applyMode = 'hybrid',
     },
+    phone = {
+        provider = 'quasar_v3',
+        priority = {
+            'quasar_pro', 'quasar_v3', 'lb', 'codem', '17mov', 'gcphone',
+            'gksphone', 'high', 'npwd', 'yseries', 'roadphone', 'sd', 'framework',
+        },
+        minDigits = 3,
+        maxDigits = 15,
+        generateDigits = 7,
+    },
     disabled = {},
 }

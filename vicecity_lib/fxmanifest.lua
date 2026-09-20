@@ -13,6 +13,7 @@ shared_scripts {
     'shared/framework.lua',
     'shared/inventory.lua',
     'shared/appearance.lua',
+    'shared/phone.lua',
 }
 
 client_scripts {
@@ -20,6 +21,8 @@ client_scripts {
     'client/inventory/*.lua',
     'client/appearance/*.lua',
     'client/appearance.lua',
+    'client/phone/*.lua',
+    'client/phone.lua',
     'client/init.lua',
 }
 
@@ -28,6 +31,8 @@ server_scripts {
     'server/inventory/*.lua',
     'server/appearance/*.lua',
     'server/appearance.lua',
+    'server/phone/*.lua',
+    'server/phone.lua',
     'server/init.lua',
 }
 
@@ -40,6 +45,10 @@ export 'GetFramework'
 export 'GetAppearance'
 export 'SetAppearance'
 export 'OpenWardrobe'
+export 'GetPhoneNumber'
+export 'SetPhoneNumber'
+export 'GetPhoneProvider'
+export 'GetPhoneCapabilities'
 
 server_export 'GetVersion'
 server_export 'IsReady'
@@ -50,3 +59,7 @@ server_export 'GetFramework'
 server_export 'GetAppearance'
 server_export 'SetAppearance'
 server_export 'OpenWardrobe'
+server_export 'GetPhoneNumber'
+server_export 'SetPhoneNumber'
+server_export 'GetPhoneProvider'
+server_export 'GetPhoneCapabilities'

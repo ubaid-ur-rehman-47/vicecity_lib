@@ -32,8 +32,8 @@ function ViceCity.Framework.GetPlayerData()
     return call('getPlayerData')
 end
 
-function ViceCity.Framework.GetIdentifier()
-    return call('getIdentifier')
+function ViceCity.Framework.GetIdentifier(source)
+    return call('getIdentifier', source)
 end
 
 function ViceCity.Framework.GetNameForPlayer()

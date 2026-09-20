@@ -158,6 +158,36 @@ function ViceCity.ResolveProviders()
         appearanceCandidates = {{ name = configuredAppearance, resource = appearanceResources[configuredAppearance] }}
     end
     ViceCity.AppearanceAdapter = ViceCity.ResolveProvider('appearance', appearanceCandidates)
+
+    local phoneResources = {
+        quasar_v3 = 'qs-smartphone',
+        quasar_pro = 'qs-smartphone-pro',
+        lb = 'lb-phone',
+        codem = 'codem-phone',
+        ['17mov'] = '17mov_Phone',
+        gcphone = 'gcphone',
+        gksphone = 'gksphone',
+        high = 'high-phone',
+        npwd = 'npwd',
+        yseries = 'yseries',
+        roadphone = 'roadphone',
+        sd = 'sd-phone',
+        framework = nil,
+    }
+    local phoneCandidates = {}
+    local phoneConfig = ViceCityConfig.phone or {}
+    for _, name in ipairs(phoneConfig.priority or {}) do
+        phoneCandidates[#phoneCandidates + 1] = {
+            name = name,
+            resource = phoneResources[name],
+        }
+    end
+    local configuredPhone = phoneConfig.provider
+    if configuredPhone and configuredPhone ~= 'auto' and configuredPhone ~= 'none' then
+        phoneCandidates = {{ name = configuredPhone, resource = phoneResources[configuredPhone] }}
+    end
+    ViceCity.PhoneAdapter = ViceCity.ResolveProvider('phone', phoneCandidates)
+    if not ViceCity.PhoneAdapter then ViceCity.Resolved.phone = 'none' end
     ViceCity.ResolveProvider('database', {
         { name = 'none' },
     })
