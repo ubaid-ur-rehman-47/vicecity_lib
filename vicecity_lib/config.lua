@@ -8,5 +8,9 @@ ViceCityConfig = {
         database = 'auto',
     },
     frameworkPriority = { 'qbox', 'qb', 'esx', 'standalone' },
+    inventoryPriority = {
+        'ox', 'qb', 'qs', 'codem', 'codemv2', 'core', 'tgiann',
+        'origen', 'ak47', 'ak47qb', 'jaksam', 'jpr', 'ps', 'lj', 'esx', 's', 'native',
+    },
     disabled = {},
 }

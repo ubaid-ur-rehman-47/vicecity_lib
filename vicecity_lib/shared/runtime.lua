@@ -99,9 +99,34 @@ function ViceCity.ResolveProviders()
         }
     end
     ViceCity.FrameworkAdapter = ViceCity.ResolveProvider('framework', frameworkCandidates)
-    ViceCity.ResolveProvider('inventory', {
-        { name = 'native' },
-    })
+
+    local inventoryResources = {
+        ox = 'ox_inventory',
+        qb = 'qb-inventory',
+        qs = 'qs-inventory',
+        codem = 'codem-inventory',
+        codemv2 = 'codem-inventoryv2',
+        core = 'core_inventory',
+        tgiann = 'tgiann-inventory',
+        origen = 'origen_inventory',
+        ak47 = 'ak47_inventory',
+        ak47qb = 'ak47_qb_inventory',
+        jaksam = 'jaksam_inventory',
+        jpr = 'jpr-inventory',
+        ps = 'ps-inventory',
+        lj = 'lj-inventory',
+        esx = 'esx_inventory',
+        s = 'S-inventory',
+        native = nil,
+    }
+    local inventoryCandidates = {}
+    for _, name in ipairs(ViceCityConfig.inventoryPriority or {}) do
+        inventoryCandidates[#inventoryCandidates + 1] = {
+            name = name,
+            resource = inventoryResources[name],
+        }
+    end
+    ViceCity.InventoryAdapter = ViceCity.ResolveProvider('inventory', inventoryCandidates)
     ViceCity.ResolveProvider('database', {
         { name = 'none' },
     })

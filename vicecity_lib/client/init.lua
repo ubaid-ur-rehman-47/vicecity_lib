@@ -3,11 +3,6 @@ ViceCity.RegisterProvider('framework', 'standalone', {
     context = 'client',
 })
 
-ViceCity.RegisterProvider('inventory', 'native', {
-    name = 'native',
-    context = 'client',
-})
-
 ViceCity.RegisterProvider('database', 'none', {
     name = 'none',
     context = 'client',

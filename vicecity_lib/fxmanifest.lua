@@ -11,15 +11,18 @@ shared_scripts {
     'config.lua',
     'shared/runtime.lua',
     'shared/framework.lua',
+    'shared/inventory.lua',
 }
 
 client_scripts {
     'client/framework.lua',
+    'client/inventory/*.lua',
     'client/init.lua',
 }
 
 server_scripts {
     'server/framework.lua',
+    'server/inventory/*.lua',
     'server/init.lua',
 }
 
