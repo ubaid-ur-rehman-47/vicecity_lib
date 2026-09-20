@@ -93,5 +93,4 @@ Implement each module behind a common contract with configuration, provider prio
 
 The detailed persistent plan is saved in `/memories/session/plan.md`.
 
-frameworks, inventories, appearance, characters, phones, huds, garages, keys, billing, dispatch, doorlock, fuel, mdt, dispatch, medical, ambulance, notification, progress, skills, society/banking, vehicle keys, targers, texuis, vehicles, wardrobe, weather, dealership, mechanic, dialogues, menus, markers, blips, callbacks, loading, version, points, peds, zones, database and much more
-including general and common functions/events too
+huds, garages, keys, billing, dispatch, doorlock, fuel, mdt, dispatch, medical, ambulance, notification, progress, skills, society/banking, vehicle keys, targers, texuis, vehicles, wardrobe, weather, dealership, mechanic, dialogues, menus, markers, blips, callbacks, loading, version, points, peds, zones, database

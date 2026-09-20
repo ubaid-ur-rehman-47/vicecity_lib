@@ -30,5 +30,16 @@ ViceCityConfig = {
         maxDigits = 15,
         generateDigits = 7,
     },
+    banking = {
+        provider = 'auto',
+        priority = {
+            'okokbanking', 'qb-banking', 'renewed', 'fd_banking', 'tgg-banking',
+            'tgiann-bank', 'qs-banking', 'wasabi', 'snipe', 'crm-banking',
+            'kartik', 'p_banking', 'nfs-banking', 'nfs-billing', 'RxBanking',
+            'sd-multijob', 'vms_bossmenu', 'nass_bossmenu', 'xnr-bossmenu',
+            'esx_society', 'qb-management', 'framework',
+        },
+        sqlFallback = nil,
+    },
     disabled = {},
 }

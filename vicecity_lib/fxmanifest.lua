@@ -14,6 +14,7 @@ shared_scripts {
     'shared/inventory.lua',
     'shared/appearance.lua',
     'shared/phone.lua',
+    'shared/banking.lua',
 }
 
 client_scripts {
@@ -23,6 +24,9 @@ client_scripts {
     'client/appearance.lua',
     'client/phone/*.lua',
     'client/phone.lua',
+    'client/banking/*.lua',
+    'client/banking.lua',
+    'client/banking_init.lua',
     'client/init.lua',
 }
 
@@ -33,6 +37,10 @@ server_scripts {
     'server/appearance.lua',
     'server/phone/*.lua',
     'server/phone.lua',
+    'server/banking/*.lua',
+    'server/banking.lua',
+    'server/society.lua',
+    'server/banking_init.lua',
     'server/init.lua',
 }
 
