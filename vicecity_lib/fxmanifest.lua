@@ -15,6 +15,10 @@ shared_scripts {
     'shared/appearance.lua',
     'shared/phone.lua',
     'shared/banking.lua',
+    'shared/garage.lua',
+    'shared/vehiclekeys.lua',
+    'shared/vehicles.lua',
+    'shared/database.lua',
 }
 
 client_scripts {
@@ -27,6 +31,10 @@ client_scripts {
     'client/banking/*.lua',
     'client/banking.lua',
     'client/banking_init.lua',
+    'client/garage/*.lua',
+    'client/garage.lua',
+    'client/vehiclekeys/*.lua',
+    'client/vehiclekeys.lua',
     'client/init.lua',
 }
 
@@ -41,6 +49,12 @@ server_scripts {
     'server/banking.lua',
     'server/society.lua',
     'server/banking_init.lua',
+    'server/garage/*.lua',
+    'server/garage.lua',
+    'server/vehiclekeys/*.lua',
+    'server/vehiclekeys.lua',
+    'server/vehicles.lua',
+    'server/database/*.lua',
     'server/init.lua',
 }
 
@@ -57,6 +71,12 @@ export 'GetPhoneNumber'
 export 'SetPhoneNumber'
 export 'GetPhoneProvider'
 export 'GetPhoneCapabilities'
+export 'GetGarageProvider'
+export 'GetGarageCapabilities'
+export 'GetVehicleKeysProvider'
+export 'GetVehicleKeysCapabilities'
+export 'GiveVehicleKeys'
+export 'RemoveVehicleKeys'
 
 server_export 'GetVersion'
 server_export 'IsReady'
@@ -71,3 +91,9 @@ server_export 'GetPhoneNumber'
 server_export 'SetPhoneNumber'
 server_export 'GetPhoneProvider'
 server_export 'GetPhoneCapabilities'
+server_export 'GetGarageProvider'
+server_export 'GetGarageCapabilities'
+server_export 'GetVehicleKeysProvider'
+server_export 'GetVehicleKeysCapabilities'
+server_export 'GiveVehicleKeys'
+server_export 'RemoveVehicleKeys'

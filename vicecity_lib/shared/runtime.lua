@@ -188,7 +188,33 @@ function ViceCity.ResolveProviders()
     end
     ViceCity.PhoneAdapter = ViceCity.ResolveProvider('phone', phoneCandidates)
     if not ViceCity.PhoneAdapter then ViceCity.Resolved.phone = 'none' end
-    ViceCity.ResolveProvider('database', {
+
+    local garageCandidates = {}
+    local garageConfig = ViceCityConfig.garage or {}
+    for _, name in ipairs(garageConfig.priority or {}) do
+        garageCandidates[#garageCandidates + 1] = { name = name, resource = name }
+    end
+    local configuredGarage = garageConfig.provider
+    if configuredGarage and configuredGarage ~= 'auto' then
+        garageCandidates = { { name = configuredGarage, resource = configuredGarage } }
+    end
+    ViceCity.GarageAdapter = ViceCity.ResolveProvider('garage', garageCandidates)
+    if not ViceCity.GarageAdapter then ViceCity.Resolved.garage = 'none' end
+
+    local vehicleKeysCandidates = {}
+    local vehicleKeysConfig = ViceCityConfig.vehicleKeys or {}
+    for _, name in ipairs(vehicleKeysConfig.priority or {}) do
+        vehicleKeysCandidates[#vehicleKeysCandidates + 1] = { name = name, resource = name ~= 'native' and name or nil }
+    end
+    local configuredVehicleKeys = vehicleKeysConfig.provider
+    if configuredVehicleKeys and configuredVehicleKeys ~= 'auto' then
+        vehicleKeysCandidates = { { name = configuredVehicleKeys, resource = configuredVehicleKeys ~= 'native' and configuredVehicleKeys or nil } }
+    end
+    ViceCity.VehicleKeysAdapter = ViceCity.ResolveProvider('vehiclekeys', vehicleKeysCandidates)
+    if not ViceCity.VehicleKeysAdapter then ViceCity.Resolved.vehiclekeys = 'native' end
+
+    ViceCity.DatabaseAdapter = ViceCity.ResolveProvider('database', {
+        { name = 'oxmysql', resource = 'oxmysql' },
         { name = 'none' },
     })
 end

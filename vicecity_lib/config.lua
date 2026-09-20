@@ -41,5 +41,28 @@ ViceCityConfig = {
         },
         sqlFallback = nil,
     },
+    garage = {
+        provider = 'auto',
+        priority = { 'qbx_garages', 'qb-garages', 'cd_garage', 'qs-advancedgarages' },
+    },
+    vehicleKeys = {
+        provider = 'auto',
+        priority = {
+            'qbx_vehiclekeys', 'qb-vehiclekeys', 'wasabi_carlock', 'Renewed-Vehiclekeys', 'MrNewbVehicleKeys',
+            'vehicles_keys', 'tgiann-hotwire', 'mVehicle', 'okokGarage', 'cd_garage', 'ND_Core',
+            '0r-vehiclekeys', 'LifeSaver_KeySystem', 'ak47_qb_vehiclekeys', 'ak47_vehiclekeys', 'qs-vehiclekeys',
+            'native',
+        },
+        -- tgiann-hotwire is a separate ignition layer: when installed alongside
+        -- another key provider, also put a key in the ignition on give.
+        hotwireIgnition = true,
+    },
+    vehicles = {
+        -- Persistence is provider-owned (the active garage adapter's own
+        -- vehicle table) unless an explicit SQL mapping is declared here, e.g.
+        -- sqlFallback = { table = 'player_vehicles', plateColumn = 'plate',
+        --     identifierColumn = 'citizenid', garageColumn = 'garage', stateColumn = 'state' },
+        sqlFallback = nil,
+    },
     disabled = {},
 }
