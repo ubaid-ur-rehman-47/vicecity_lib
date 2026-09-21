@@ -1,0 +1,4 @@
+{
+  "permanent_cannot_move": "This item (%s) is permanent and cannot be moved.",
+  "permanent_cannot_throw": "This item (%s) is permanent and cannot be thrown."
+}

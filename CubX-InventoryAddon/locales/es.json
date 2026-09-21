@@ -1,0 +1,4 @@
+{
+  "permanent_cannot_move": "Este objeto (%s) es permanente y no se puede mover.",
+  "permanent_cannot_throw": "Este objeto (%s) es permanente y no se puede lanzar."
+}

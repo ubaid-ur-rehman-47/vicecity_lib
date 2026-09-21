@@ -34,6 +34,21 @@ local function createServerGarageAdapter(name, resource, options)
         return false, { reason = 'unsupported', operation = 'isVehicleInGarage', provider = self.name }
     end
 
+    function adapter:createVehicle(plate, model, owner, garage, props)
+        if options.createVehicle then return options.createVehicle(self, plate, model, owner, garage, props) end
+        return false, { reason = 'unsupported', operation = 'createVehicle', provider = self.name }
+    end
+
+    function adapter:deleteVehicle(plate)
+        if options.deleteVehicle then return options.deleteVehicle(self, plate) end
+        return false, { reason = 'unsupported', operation = 'deleteVehicle', provider = self.name }
+    end
+
+    function adapter:setVehicleOwner(plate, identifier)
+        if options.setVehicleOwner then return options.setVehicleOwner(self, plate, identifier) end
+        return false, { reason = 'unsupported', operation = 'setVehicleOwner', provider = self.name }
+    end
+
     function adapter:getRaw()
         return resource and exports[resource] or nil
     end

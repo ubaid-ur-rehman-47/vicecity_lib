@@ -10,9 +10,11 @@ version '0.1.0'
 shared_scripts {
     'config.lua',
     'shared/runtime.lua',
+    'shared/commands.lua',
     'shared/framework.lua',
     'shared/inventory.lua',
     'shared/appearance.lua',
+    'shared/appearance_defaults.lua',
     'shared/phone.lua',
     'shared/banking.lua',
     'shared/garage.lua',
@@ -35,6 +37,8 @@ client_scripts {
     'client/garage.lua',
     'client/vehiclekeys/*.lua',
     'client/vehiclekeys.lua',
+    'client/keybinds.lua',
+    'client/vehicles_keybinds.lua',
     'client/init.lua',
 }
 
@@ -54,6 +58,7 @@ server_scripts {
     'server/vehiclekeys/*.lua',
     'server/vehiclekeys.lua',
     'server/vehicles.lua',
+    'server/vehicles_commands.lua',
     'server/database/*.lua',
     'server/init.lua',
 }
@@ -97,3 +102,15 @@ server_export 'GetVehicleKeysProvider'
 server_export 'GetVehicleKeysCapabilities'
 server_export 'GiveVehicleKeys'
 server_export 'RemoveVehicleKeys'
+server_export 'CreateVehicle'
+server_export 'DeleteVehicle'
+server_export 'GetVehicle'
+server_export 'ListVehicles'
+server_export 'ListOwnedVehicles'
+server_export 'CountVehicles'
+server_export 'IsVehicleOwnedBy'
+server_export 'SetVehicleOwner'
+server_export 'SetVehicleGarage'
+server_export 'SetVehicleState'
+server_export 'SaveVehicleProperties'
+server_export 'RepairVehicle'

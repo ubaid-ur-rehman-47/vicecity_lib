@@ -61,7 +61,9 @@ ViceCityConfig = {
         -- Persistence is provider-owned (the active garage adapter's own
         -- vehicle table) unless an explicit SQL mapping is declared here, e.g.
         -- sqlFallback = { table = 'player_vehicles', plateColumn = 'plate',
-        --     identifierColumn = 'citizenid', garageColumn = 'garage', stateColumn = 'state' },
+        --     identifierColumn = 'citizenid', modelColumn = 'vehicle', garageColumn = 'garage',
+        --     stateColumn = 'state', propsColumn = 'mods', engineColumn = 'engine',
+        --     bodyColumn = 'body', fuelColumn = 'fuel' },
         sqlFallback = nil,
     },
     disabled = {},

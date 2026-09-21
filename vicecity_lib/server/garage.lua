@@ -42,6 +42,27 @@ function ViceCity.Garage.ServerIsVehicleInGarage(vehicleId)
     return call('isVehicleInGarage', vehicleId)
 end
 
+-- Provider-owned first (the active garage resource's own vehicle CRUD, if it
+-- exposes one); falls back to vicecity_lib's own self-owned vehicle store so
+-- CRUD always works even when the garage resource has no public CRUD export.
+function ViceCity.Garage.ServerCreateVehicle(plate, model, owner, garage, props)
+    local ok, result = call('createVehicle', plate, model, owner, garage, props)
+    if ok ~= false or type(result) ~= 'table' or result.reason ~= 'unsupported' then return ok, result end
+    return ViceCity.Vehicles.Create(plate, model, owner, garage, props)
+end
+
+function ViceCity.Garage.ServerDeleteVehicle(plate)
+    local ok, result = call('deleteVehicle', plate)
+    if ok ~= false or type(result) ~= 'table' or result.reason ~= 'unsupported' then return ok, result end
+    return ViceCity.Vehicles.Delete(plate)
+end
+
+function ViceCity.Garage.ServerSetVehicleOwner(plate, identifier)
+    local ok, result = call('setVehicleOwner', plate, identifier)
+    if ok ~= false or type(result) ~= 'table' or result.reason ~= 'unsupported' then return ok, result end
+    return ViceCity.Vehicles.SetOwner(plate, identifier)
+end
+
 function ViceCity.Garage.ServerGetRawProvider()
     local provider = adapter()
     return provider and provider.getRaw and provider:getRaw() or nil

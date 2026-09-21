@@ -1,0 +1,4 @@
+{
+  "permanent_cannot_move": "該物品(%s)是永久性的,無法移動。",
+  "permanent_cannot_throw": "該物品(%s)是永久性的,無法投擲。"
+}

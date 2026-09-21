@@ -1,0 +1,4 @@
+{
+  "permanent_cannot_move": "이 아이템(%s)은 영구적이며 옮길 수 없습니다.",
+  "permanent_cannot_throw": "이 아이템(%s)은 영구적이며 던질 수 없습니다."
+}

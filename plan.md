@@ -93,4 +93,4 @@ Implement each module behind a common contract with configuration, provider prio
 
 The detailed persistent plan is saved in `/memories/session/plan.md`.
 
-huds, garages, keys, billing, doorlock, fuel, mdt, dispatch, medical, ambulance, notification, progress, skills, vehicle keys, targers, texuis, vehicles, weather, dealership, mechanic, dialogues, menus, markers, blips, callbacks, loading, version, points, peds, zones, database
+huds, billing, doorlock, fuel, mdt, dispatch, medical, ambulance, notification, progress, skills, targers, texuis, vehicles, weather, dealership, mechanic, dialogues, menus, markers, blips, callbacks, loading, version, points, peds, zones, database
