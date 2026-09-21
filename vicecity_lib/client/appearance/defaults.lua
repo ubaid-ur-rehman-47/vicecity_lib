@@ -25,3 +25,6 @@ function ViceCity.Appearance.GetDefaultProp(ped, prop)
     end
     return nil
 end
+
+GetDefaultAppearanceComponent = ViceCity.Appearance.GetDefaultComponent
+GetDefaultAppearanceProp = ViceCity.Appearance.GetDefaultProp

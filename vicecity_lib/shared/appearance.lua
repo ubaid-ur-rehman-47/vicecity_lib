@@ -100,3 +100,7 @@ SetAppearance = ViceCity.Appearance.Set
 OpenWardrobe = ViceCity.Wardrobe.Open
 GetAppearanceProvider = ViceCity.Appearance.GetProvider
 GetAppearanceCapabilities = ViceCity.Appearance.GetCapabilities
+GetAppearanceComponent = ViceCity.Appearance.GetComponent
+SetAppearanceComponent = ViceCity.Appearance.SetComponent
+GetAppearanceProp = ViceCity.Appearance.GetProp
+SetAppearanceProp = ViceCity.Appearance.SetProp

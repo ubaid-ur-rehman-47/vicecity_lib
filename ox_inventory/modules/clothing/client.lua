@@ -3,81 +3,105 @@
 -- No inventory items are involved; clothing is never consumed or given here.
 if not lib then return end
 
+local ViceCity = exports.vicecity_lib
+
+-- Slot-key naming used by this inventory's NUI, mapped to ped component/prop ids.
+local slotComponents = {
+    mask = 1,
+    arms = 3,
+    legs = 4,
+    bag = 5,
+    shoes = 6,
+    necklace = 7,
+    undershirt = 8,
+    armor = 9,
+    decals = 10,
+    torso = 11,
+}
+
+local slotProps = {
+    hat = 0,
+    glasses = 1,
+    ears = 2,
+    watch = 6,
+    bracelet = 7,
+}
+
 local hiddenSlots = {}
 local originalAppearance
 
 local function captureOriginalAppearance()
-	if originalAppearance then return end
+    if originalAppearance then return end
 
-	local ok, appearance = ViceCity.Appearance.Get(cache.ped)
-	if ok then
-		originalAppearance = appearance
-	end
+    local ok, appearance = pcall(function() return ViceCity:GetAppearance(cache.ped) end)
+    if ok and appearance then
+        originalAppearance = appearance
+    end
 end
 
-local function restoreComponent(slotKey, componentId)
-	local drawable, texture
+local function restoreComponent(componentId)
+    local drawable, texture
 
-	if originalAppearance and originalAppearance.components and originalAppearance.components[componentId] then
-		local comp = originalAppearance.components[componentId]
-		drawable, texture = comp.drawable, comp.texture
-	else
-		local ok, comp = ViceCity.Appearance.GetComponent(cache.ped, componentId)
-		if not ok then return end
-		drawable, texture = comp.drawable, comp.texture
-	end
+    if originalAppearance and originalAppearance.components and originalAppearance.components[componentId] then
+        local comp = originalAppearance.components[componentId]
+        drawable, texture = comp.drawable, comp.texture
+    else
+        local ok, comp = pcall(function() return ViceCity:GetAppearanceComponent(cache.ped, componentId) end)
+        if not ok or not comp then return end
+        drawable, texture = comp.drawable, comp.texture
+    end
 
-	ViceCity.Appearance.SetComponent(cache.ped, componentId, drawable, texture)
+    ViceCity:SetAppearanceComponent(cache.ped, componentId, drawable, texture)
 end
 
-local function restoreProp(slotKey, propId)
-	local drawable, texture
+local function restoreProp(propId)
+    local drawable, texture
 
-	if originalAppearance and originalAppearance.props and originalAppearance.props[propId] then
-		local prop = originalAppearance.props[propId]
-		drawable, texture = prop.drawable, prop.texture
-	else
-		local ok, prop = ViceCity.Appearance.GetProp(cache.ped, propId)
-		if not ok then return end
-		drawable, texture = prop.drawable, prop.texture
-	end
+    if originalAppearance and originalAppearance.props and originalAppearance.props[propId] then
+        local prop = originalAppearance.props[propId]
+        drawable, texture = prop.drawable, prop.texture
+    else
+        local ok, prop = pcall(function() return ViceCity:GetAppearanceProp(cache.ped, propId) end)
+        if not ok or not prop then return end
+        drawable, texture = prop.drawable, prop.texture
+    end
 
-	ViceCity.Appearance.SetProp(cache.ped, propId, drawable, texture)
+    ViceCity:SetAppearanceProp(cache.ped, propId, drawable, texture)
 end
 
 local function hideComponent(componentId)
-	local default = ViceCity.Appearance.GetDefaultComponent(cache.ped, componentId)
-	if not default then return end
+    local default = ViceCity:GetDefaultAppearanceComponent(cache.ped, componentId)
+    if not default then return end
 
-	ViceCity.Appearance.SetComponent(cache.ped, componentId, default.drawable, default.texture)
+    ViceCity:SetAppearanceComponent(cache.ped, componentId, default.drawable, default.texture)
 end
 
 local function hideProp(propId)
-	local default = ViceCity.Appearance.GetDefaultProp(cache.ped, propId)
-	ViceCity.Appearance.SetProp(cache.ped, propId, default and default.drawable or -1, default and default.texture or 0)
+    local default = ViceCity:GetDefaultAppearanceProp(cache.ped, propId)
+    ViceCity:SetAppearanceProp(cache.ped, propId, default and default.drawable or -1, default and default.texture or 0)
 end
 
 local function toggleClothingVisibility(slotKey, hidden)
-	local componentId = ViceCity.AppearanceSlotComponents[slotKey]
-	local propId = ViceCity.AppearanceSlotProps[slotKey]
+    local componentId = slotComponents[slotKey]
+    local propId = slotProps[slotKey]
 
-	if not componentId and not propId then return false end
+    if not componentId and not propId then return false end
 
-	captureOriginalAppearance()
+    captureOriginalAppearance()
 
-	if hidden then
-		if componentId then hideComponent(componentId) else hideProp(propId) end
-	else
-		if componentId then restoreComponent(slotKey, componentId) else restoreProp(slotKey, propId) end
-	end
+    if hidden then
+        if componentId then hideComponent(componentId) else hideProp(propId) end
+    else
+        if componentId then restoreComponent(componentId) else restoreProp(propId) end
+    end
 
-	hiddenSlots[slotKey] = hidden or nil
+    hiddenSlots[slotKey] = hidden or nil
 
-	return true
+    return true
 end
 
 Clothing = {
-	ToggleClothingVisibility = toggleClothingVisibility,
-	CaptureOriginalAppearance = captureOriginalAppearance,
-	GetHiddenSlots = function() return hiddenSlots end,
+    ToggleClothingVisibility = toggleClothingVisibility,
+    CaptureOriginalAppearance = captureOriginalAppearance,
+    GetHiddenSlots = function() return hiddenSlots end,
 }
